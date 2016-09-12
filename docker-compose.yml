@@ -1,0 +1,48 @@
+version: '2'
+services:
+  rbac-auth-services:
+    image: lerwys/docker-rbac-auth-services-wildfly
+    ports:
+      - "8081:8080"
+      - "9991:9990"
+      - "8444:8443"
+    container_name: rbac-auth-services
+    depends_on:
+      - rbac-auth-services-postgres
+    entrypoint: /wait-for-it.sh
+    command: rbac-auth-services-postgres:5432 -- /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
+    networks:
+      - postgres-rbac
+
+  rbac-management-studio:
+    image: lerwys/docker-rbac-management-studio-wildfly
+    ports:
+      - "8082:8080"
+      - "9992:9990"
+      - "8445:8443"
+    container_name: rbac-management-studio
+    depends_on:
+      - rbac-auth-services-postgres
+    entrypoint: /wait-for-it.sh
+    command: rbac-auth-services-postgres:5432 -- /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
+    networks:
+      - postgres-rbac
+
+  rbac-auth-services-postgres:
+    image: lerwys/docker-rbac-auth-services-postgres
+    ports:
+      - "5433:5432"
+    container_name: rbac-auth-services-postgres
+    volumes:
+      - rbac-auth-services-postgres-volume:/var/lib/postgresql/data
+    networks:
+      - postgres-rbac
+    env_file: env-vars/naming-service-postgres-vars.env
+
+volumes:
+  rbac-auth-services-postgres-volume:
+    driver: local
+
+networks:
+  postgres-rbac:
+    driver: bridge
