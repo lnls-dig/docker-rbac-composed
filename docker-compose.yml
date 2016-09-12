@@ -9,6 +9,9 @@ services:
     container_name: rbac-auth-services
     depends_on:
       - rbac-auth-services-postgres
+    dns:
+        - 10.0.0.71
+        - 10.0.0.72
     entrypoint: /wait-for-it.sh
     command: rbac-auth-services-postgres:5432 -- /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
     networks:
@@ -23,6 +26,9 @@ services:
     container_name: rbac-management-studio
     depends_on:
       - rbac-auth-services-postgres
+    dns:
+        - 10.0.0.71
+        - 10.0.0.72
     entrypoint: /wait-for-it.sh
     command: rbac-auth-services-postgres:5432 -- /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
     networks:
