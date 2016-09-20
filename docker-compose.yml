@@ -12,10 +12,11 @@ services:
     dns:
         - 10.0.0.71
         - 10.0.0.72
-    entrypoint: /wait-for-it.sh
+    entrypoint: /docker-entrypoint.sh
     command: rbac-auth-services-postgres:5432 -- /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
     networks:
       - postgres-rbac
+    env_file: env-vars/rbac-wildfly-vars.env
 
   rbac-management-studio:
     image: lerwys/docker-rbac-management-studio-wildfly
@@ -29,10 +30,11 @@ services:
     dns:
         - 10.0.0.71
         - 10.0.0.72
-    entrypoint: /wait-for-it.sh
+    entrypoint: /docker-entrypoint.sh
     command: rbac-auth-services-postgres:5432 -- /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
     networks:
       - postgres-rbac
+    env_file: env-vars/rbac-wildfly-vars.env
 
   rbac-auth-services-postgres:
     image: lerwys/docker-rbac-auth-services-postgres
