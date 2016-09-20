@@ -43,7 +43,7 @@ services:
       - rbac-auth-services-postgres-volume:/var/lib/postgresql/data
     networks:
       - postgres-rbac
-    env_file: env-vars/naming-service-postgres-vars.env
+    env_file: env-vars/rbac-postgres-vars.env
 
 volumes:
   rbac-auth-services-postgres-volume:
