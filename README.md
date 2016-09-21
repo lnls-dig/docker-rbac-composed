@@ -12,7 +12,7 @@ Start service
 
 The REST interface should be available at:
 
-	http://localhost:8443/services
+	http://localhost:8443/service
 
 And you should be able to get the RBAC version accessing:
 
