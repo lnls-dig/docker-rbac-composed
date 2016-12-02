@@ -1,7 +1,7 @@
 version: '2'
 services:
   rbac-auth-services:
-    image: lnls/docker-rbac-auth-services-wildfly
+      image: lnls/docker-rbac-auth-services-wildfly:2.0.6
     ports:
       - "8081:8080"
       - "9991:9990"
@@ -19,7 +19,7 @@ services:
     env_file: env-vars/rbac-wildfly-vars.env
 
   rbac-management-studio:
-    image: lnls/docker-rbac-management-studio-wildfly
+      image: lnls/docker-rbac-management-studio-wildfly:2.0.6
     ports:
       - "8082:8080"
       - "9992:9990"
