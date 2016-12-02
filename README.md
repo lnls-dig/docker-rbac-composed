@@ -18,6 +18,16 @@ And you should be able to get the RBAC version accessing:
 
 	http://localhost:8443/service/auth/version
 
+## Systemd Integration
+
+To integrate this as a systemd service, do:
+
+    make install
+
+To remove the systemd service and its additional files:
+
+    make uninstall
+
 ## IMPORTANT
 
 If you are running the server locally, do:
