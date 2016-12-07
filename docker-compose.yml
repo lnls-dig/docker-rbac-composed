@@ -37,7 +37,7 @@ services:
     env_file: env-vars/rbac-wildfly-vars.env
 
   rbac-auth-services-postgres:
-    image: lnls/docker-rbac-auth-services-postgres
+    image: lnls/docker-rbac-auth-services-postgres:2.0.6
     ports:
       - "5433:5432"
     container_name: rbac-auth-services-postgres
