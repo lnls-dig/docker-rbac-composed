@@ -13,12 +13,13 @@ services:
         - 10.0.0.71
         - 10.0.0.72
     extra_hosts:
-      - "sirius-rbac-auth.lnls.br:172.18.0.3"
-      - "sirius-rbac.lnls.br:172.18.0.4"
+      - "sirius-rbac.lnls.br:172.60.0.3"
+      - "sirius-rbac-auth.lnls.br:172.60.0.4"
     entrypoint: /docker-entrypoint.sh
     command: rbac-auth-services-postgres:5432 -- /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
     networks:
-      - postgres-rbac
+      postgres-rbac:
+        ipv4_address: 172.60.0.4
     env_file: env-vars/rbac-wildfly-vars.env
 
   rbac-management-studio:
@@ -34,12 +35,13 @@ services:
         - 10.0.0.71
         - 10.0.0.72
     extra_hosts:
-      - "sirius-rbac-auth.lnls.br:172.18.0.3"
-      - "sirius-rbac.lnls.br:172.18.0.4"
+      - "sirius-rbac.lnls.br:172.60.0.3"
+      - "sirius-rbac-auth.lnls.br:172.60.0.4"
     entrypoint: /docker-entrypoint.sh
     command: rbac-auth-services-postgres:5432 -- /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
     networks:
-      - postgres-rbac
+      postgres-rbac:
+        ipv4_address: 172.60.0.3
     env_file: env-vars/rbac-wildfly-vars.env
 
   rbac-auth-services-postgres:
@@ -50,7 +52,8 @@ services:
     volumes:
       - rbac-auth-services-postgres-volume:/var/lib/postgresql/data
     networks:
-      - postgres-rbac
+      postgres-rbac:
+        ipv4_address: 172.60.0.104
     env_file: env-vars/rbac-postgres-vars.env
 
 volumes:
@@ -60,3 +63,7 @@ volumes:
 networks:
   postgres-rbac:
     driver: bridge
+    ipam:
+     config:
+       - subnet: 172.60.0.0/16
+         gateway: 172.60.0.1
