@@ -1,4 +1,4 @@
-version: '2'
+version: '3.4'
 services:
   rbac-auth-services:
     image: lnls/docker-rbac-auth-services-wildfly:2.0.6-1
