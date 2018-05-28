@@ -64,6 +64,5 @@ networks:
   postgres-rbac:
     driver: bridge
     ipam:
-     config:
-       - subnet: 172.60.0.0/16
-         gateway: 172.60.0.1
+      config:
+        - subnet: 172.60.0.0/16
